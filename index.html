@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moos Share</title>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 30px 20px;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f3ee;
+      color: #153f32;
+      text-align: center;
+    }
+
+    .card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 24px;
+      padding: 28px 20px;
+      box-sizing: border-box;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 18px;
+    }
+
+    h1 {
+      margin: 22px 0 8px;
+      font-size: 28px;
+    }
+
+    p {
+      line-height: 1.7;
+      color: #555;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 18px;
+      border: 0;
+      border-radius: 12px;
+      background: #1f5a46;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 16px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <img src="https://i.ibb.co/mF2tprG8/w1024.jpg" alt="沐思花藝場佈">
+
+    <h1>沐思花藝場佈</h1>
+
+    <p>
+      創意花藝 × 巨型裝置<br>
+      打造吸睛、有話題的品牌空間
+    </p>
+
+    <button id="shareButton" onclick="shareFlex()" disabled>
+      分享給 LINE 好友
+    </button>
+
+    <div id="status">LINE 連線中...</div>
+  </div>
+
+  <script>
+    const LIFF_ID = "2010673862-CeTg8hAZ";
+
+    async function initializeLiff() {
+      const status = document.getElementById("status");
+      const button = document.getElementById("shareButton");
+
+      try {
+        await liff.init({
+          liffId: LIFF_ID
+        });
+
+        if (!liff.isLoggedIn()) {
+          liff.login();
+          return;
+        }
+
+        button.disabled = false;
+        status.textContent = "可以分享給 LINE 好友";
+      } catch (error) {
+        console.error(error);
+        status.textContent = "LINE 連線失敗：" + error.message;
+      }
+    }
+
+    async function shareFlex() {
+      const status = document.getElementById("status");
+
+      try {
+        if (!liff.isApiAvailable("shareTargetPicker")) {
+          status.textContent = "目前環境不支援好友分享";
+          return;
+        }
+
+        const result = await liff.shareTargetPicker([
+          {
+            type: "flex",
+            altText: "沐思花藝場佈作品介紹",
+            contents: {
+              type: "carousel",
+              contents: [
+                {
+                  type: "bubble",
+                  body: {
+                    type: "box",
+                    layout: "vertical",
+                    contents: [
+                      {
+                        type: "image",
+                        url: "https://i.ibb.co/mF2tprG8/w1024.jpg",
+                        size: "full",
+                        aspectMode: "cover",
+                        aspectRatio: "3:4",
+                        gravity: "top"
+                      },
+                      {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [
+                          {
+                            type: "text",
+                            text: "花藝場佈",
+                            size: "xl",
+                            color: "#ffffff",
+                            weight: "bold"
+                          },
+                          {
+                            type: "text",
+                            text: "創意花藝 × 巨型裝置\n打造吸睛、有話題的品牌空間",
+                            color: "#ebebeb",
+                            size: "sm",
+                            wrap: true,
+                            margin: "sm"
+                          },
+                          {
+                            type: "box",
+                            layout: "vertical",
+                            contents: [
+                              {
+                                type: "text",
+                                text: "更多資訊",
+                                color: "#ffffff",
+                                align: "center"
+                              }
+                            ],
+                            borderWidth: "1px",
+                            cornerRadius: "4px",
+                            borderColor: "#ffffff",
+                            margin: "xxl",
+                            height: "40px",
+                            justifyContent: "center",
+                            action: {
+                              type: "uri",
+                              label: "更多資訊",
+                              uri: "https://www.moos.com.tw/Project"
+                            }
+                          }
+                        ],
+                        position: "absolute",
+                        offsetBottom: "0px",
+                        offsetStart: "0px",
+                        offsetEnd: "0px",
+                        backgroundColor: "#03303Acc",
+                        paddingAll: "20px",
+                        paddingTop: "18px"
+                      }
+                    ],
+                    paddingAll: "0px"
+                  }
+                }
+              ]
+            }
+          }
+        ]);
+
+        if (result) {
+          status.textContent = "分享完成";
+        } else {
+          status.textContent = "已取消分享";
+        }
+      } catch (error) {
+        console.error(error);
+        status.textContent = "分享失敗：" + error.message;
+      }
+    }
+
+    initializeLiff();
+  </script>
+</body>
+</html>
