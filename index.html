@@ -6,20 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MOOS Floral Design</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
 
-    html {
-      scroll-behavior: smooth;
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
     }
 
     body {
-      margin: 0;
       font-family: Arial, "Microsoft JhengHei", sans-serif;
-      background: #f4f1ea;
+      background: #edf4ff;
       color: #173d32;
+      overflow-x: hidden;
     }
 
     a {
@@ -29,72 +30,23 @@
 
     .page {
       width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      background: #f4f1ea;
       min-height: 100vh;
-    }
-
-    .hero {
-      position: relative;
-      min-height: 500px;
       display: flex;
-      align-items: flex-end;
-      padding: 28px 22px;
-      color: #ffffff;
-      background:
-        linear-gradient(to top, rgba(7, 35, 29, 0.92), rgba(7, 35, 29, 0.10)),
-        url("images/hero.jpg") center top / cover no-repeat;
+      flex-direction: column;
+      justify-content: center;
+      background: #edf4ff;
+      padding: 18px 0 24px;
     }
 
-    .hero-content {
+    .slider-wrap {
       width: 100%;
-    }
-
-    .eyebrow {
-      margin: 0 0 8px;
-      font-size: 15px;
-      letter-spacing: 0.16em;
-      opacity: 0.9;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 39px;
-      line-height: 1.05;
-      font-weight: 500;
-    }
-
-    .hero-text {
-      margin: 16px 0 0;
-      font-size: 17px;
-      line-height: 1.75;
-      color: rgba(255,255,255,0.94);
-    }
-
-    .section {
-      padding: 30px 18px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1.3;
-    }
-
-    .section-desc {
-      margin: 8px 0 20px;
-      font-size: 15px;
-      line-height: 1.7;
-      color: #65716b;
     }
 
     .slider {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       overflow-x: auto;
-      padding: 2px 2px 16px;
+      padding: 10px 24px 22px;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
@@ -104,134 +56,91 @@
       display: none;
     }
 
-    .preview-card {
+    .card {
       position: relative;
-      flex: 0 0 79%;
-      aspect-ratio: 3 / 4;
+      flex: 0 0 86vw;
+      max-width: 460px;
+      height: min(760px, 82vh);
+      min-height: 620px;
       overflow: hidden;
-      border-radius: 18px;
+      border-radius: 28px;
       background: #d9ded9;
-      scroll-snap-align: start;
-      box-shadow: 0 8px 24px rgba(21, 63, 50, 0.14);
+      scroll-snap-align: center;
+      box-shadow: 0 12px 34px rgba(21, 63, 50, 0.18);
     }
 
-    .preview-card img {
+    .card img {
       width: 100%;
       height: 100%;
       display: block;
       object-fit: cover;
-      object-position: top;
+      object-position: center top;
     }
 
-    .preview-overlay {
+    .overlay {
       position: absolute;
       right: 0;
       bottom: 0;
       left: 0;
-      padding: 46px 18px 18px;
+      min-height: 43%;
+      padding: 76px 22px 22px;
       color: #ffffff;
-      background: linear-gradient(to top, rgba(3, 48, 58, 0.98), rgba(3, 48, 58, 0));
+      background: linear-gradient(
+        to top,
+        rgba(3, 48, 58, 0.99) 0%,
+        rgba(3, 48, 58, 0.95) 72%,
+        rgba(3, 48, 58, 0) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
     }
 
-    .preview-overlay h3 {
+    .overlay h2 {
       margin: 0;
-      font-size: 23px;
+      font-size: 31px;
+      line-height: 1.2;
     }
 
-    .preview-overlay p {
-      margin: 8px 0 14px;
+    .overlay p {
+      margin: 12px 0 18px;
       color: #eef4f1;
-      font-size: 14px;
-      line-height: 1.55;
+      font-size: 17px;
+      line-height: 1.58;
     }
 
-    .small-link {
+    .card-button {
       display: block;
-      padding: 11px 12px;
-      border: 1px solid rgba(255,255,255,0.45);
-      border-radius: 8px;
+      width: 100%;
+      padding: 15px 14px;
+      border: 1px solid rgba(255,255,255,0.34);
+      border-radius: 9px;
+      background: #082e31;
+      color: #ffffff;
       text-align: center;
-      font-size: 15px;
-      background: rgba(9,37,41,0.72);
+      font-size: 18px;
     }
 
-    .dots-note {
-      margin: 2px 0 0;
-      text-align: center;
-      font-size: 13px;
-      color: #77827d;
-    }
-
-    .contact-box {
-      margin: 0 18px 24px;
-      padding: 22px 16px;
-      border-radius: 20px;
-      background: #ffffff;
-      box-shadow: 0 8px 28px rgba(21, 63, 50, 0.08);
-    }
-
-    .contact-box h2 {
-      margin: 0 0 6px;
-      font-size: 23px;
-    }
-
-    .contact-box > p {
-      margin: 0 0 18px;
-      color: #69736e;
-      line-height: 1.6;
-    }
-
-    .link-list {
+    .button-stack {
       display: grid;
       gap: 10px;
     }
 
-    .link-button {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-height: 58px;
-      padding: 12px 14px;
-      border: 1px solid #e4e7e3;
-      border-radius: 13px;
-      background: #fafbf9;
-      text-align: left;
-    }
-
-    .link-icon {
-      width: 35px;
-      text-align: center;
-      font-size: 24px;
-    }
-
-    .link-copy strong {
-      display: block;
-      font-size: 16px;
-    }
-
-    .link-copy span {
-      display: block;
-      margin-top: 3px;
-      font-size: 13px;
-      color: #77817c;
-    }
-
-    .pending {
-      opacity: 0.58;
-    }
-
     .share-area {
-      padding: 0 18px 40px;
+      padding: 0 24px;
     }
 
     #shareButton {
       width: 100%;
+      max-width: 460px;
+      display: block;
+      margin: 0 auto;
       padding: 17px 20px;
       border: 0;
       border-radius: 13px;
       background: #1f664f;
       color: #ffffff;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 8px 22px rgba(31, 102, 79, 0.24);
@@ -244,18 +153,22 @@
     }
 
     #status {
-      min-height: 24px;
-      margin-top: 13px;
+      min-height: 22px;
+      margin-top: 10px;
       text-align: center;
       color: #51665e;
       font-size: 14px;
     }
 
-    .footer {
-      padding: 18px;
-      text-align: center;
-      font-size: 12px;
-      color: #7d8782;
+    @media (min-width: 600px) {
+      .slider {
+        padding-left: calc((100vw - 460px) / 2);
+        padding-right: calc((100vw - 460px) / 2);
+      }
+
+      .card {
+        flex-basis: 460px;
+      }
     }
   </style>
 </head>
@@ -263,134 +176,70 @@
 <body>
   <main class="page">
 
-    <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">MOOS FLORAL DESIGN</p>
-        <h1>沐思植物美學室</h1>
-        <p class="hero-text">
-          為品牌與空間創造獨特價值<br>
-          商業空間｜品牌活動｜巨型花藝術｜德式花藝
-        </p>
-      </div>
-    </section>
+    <section class="slider-wrap">
+      <div class="slider" aria-label="沐思六張介紹卡片">
 
-    <section class="section">
-      <h2 class="section-title">探索沐思</h2>
-      <p class="section-desc">左右滑動瀏覽品牌、場佈、課程與社群內容。</p>
-
-      <div class="slider" aria-label="沐思服務介紹">
-
-        <article class="preview-card">
-          <img src="images/about.jpg" alt="關於沐思">
-          <div class="preview-overlay">
-            <h3>關於沐思</h3>
-            <p>美學 × 創意 × 花藝設計<br>為品牌與空間創造獨特價值</p>
-            <a class="small-link" href="https://www.moos.com.tw/AboutMoos" target="_blank" rel="noopener">認識沐思</a>
+        <article class="card">
+          <img src="images/hero.jpg" alt="關於沐思">
+          <div class="overlay">
+            <h2>關於沐思</h2>
+            <p>為品牌與空間創造獨特價值<br>空間布置｜裝置藝術｜花藝教學</p>
+            <a class="card-button" href="https://www.moos.com.tw/AboutMoos" target="_blank" rel="noopener">認識沐思</a>
           </div>
         </article>
 
-        <article class="preview-card">
+        <article class="card">
           <img src="images/project.jpg" alt="花藝場佈">
-          <div class="preview-overlay">
-            <h3>花藝場佈</h3>
+          <div class="overlay">
+            <h2>花藝場佈</h2>
             <p>創意花藝 × 巨型裝置<br>打造吸睛、有話題的品牌空間</p>
-            <a class="small-link" href="https://www.moos.com.tw/Project" target="_blank" rel="noopener">查看作品</a>
+            <a class="card-button" href="https://www.moos.com.tw/Project" target="_blank" rel="noopener">更多資訊</a>
           </div>
         </article>
 
-        <article class="preview-card">
+        <article class="card">
           <img src="images/course.jpg" alt="德式花藝課程">
-          <div class="preview-overlay">
-            <h3>德式花藝課程</h3>
+          <div class="overlay">
+            <h2>德式花藝課程</h2>
             <p>從設計邏輯到結構訓練<br>建立獨立花藝創作能力</p>
-            <a class="small-link" href="https://www.moos.com.tw/BasicCourse" target="_blank" rel="noopener">了解課程</a>
+            <a class="card-button" href="https://www.moos.com.tw/BasicCourse" target="_blank" rel="noopener">了解課程</a>
           </div>
         </article>
 
-        <article class="preview-card">
+        <article class="card">
           <img src="images/giant.jpg" alt="巨型花藝術課程">
-          <div class="preview-overlay">
-            <h3>巨型花藝術課程</h3>
+          <div class="overlay">
+            <h2>巨型花藝術課程</h2>
             <p>從花型設計到結構製作<br>打造大型花藝裝置創作能力</p>
-            <a class="small-link" href="https://www.moos.com.tw/GiantFlowerCourse" target="_blank" rel="noopener">了解課程</a>
+            <a class="card-button" href="https://www.moos.com.tw/GiantFlowerCourse" target="_blank" rel="noopener">了解課程</a>
           </div>
         </article>
 
-        <article class="preview-card">
-          <img src="images/social.jpg" alt="追蹤沐思">
-          <div class="preview-overlay">
-            <h3>追蹤沐思</h3>
-            <p>看更多花藝創作與空間設計<br>一起探索花藝的更多可能</p>
-            <a class="small-link" href="https://www.facebook.com/profile.php?id=100022162093295" target="_blank" rel="noopener">前往 Facebook</a>
+        <article class="card">
+          <img src="images/social.jpg" alt="Social Media">
+          <div class="overlay">
+            <h2>Social Media</h2>
+            <p>追蹤沐思最新作品、空間設計與課程活動</p>
+            <div class="button-stack">
+              <a class="card-button" href="https://www.facebook.com/profile.php?id=100022162093295" target="_blank" rel="noopener">Facebook</a>
+              <a class="card-button" href="https://www.instagram.com/moosfloraldesign/" target="_blank" rel="noopener">Instagram</a>
+              <a class="card-button" href="https://www.threads.com/@moosfloraldesign" target="_blank" rel="noopener">Threads</a>
+            </div>
           </div>
         </article>
 
-      </div>
-
-      <p class="dots-note">← 用手指左右滑動 →</p>
-    </section>
-
-    <section class="contact-box">
-      <h2>聯絡沐思</h2>
-      <p>查看作品、課程資訊，或直接與我們聯繫。</p>
-
-      <div class="link-list">
-
-        <a class="link-button" href="https://www.moos.com.tw/" target="_blank" rel="noopener">
-          <span class="link-icon">🌿</span>
-          <span class="link-copy">
-            <strong>沐思官方網站</strong>
-            <span>查看品牌與服務內容</span>
-          </span>
-        </a>
-
-        <a class="link-button" href="https://www.facebook.com/profile.php?id=100022162093295" target="_blank" rel="noopener">
-          <span class="link-icon">📘</span>
-          <span class="link-copy">
-            <strong>Facebook</strong>
-            <span>追蹤最新作品與活動</span>
-          </span>
-        </a>
-
-         <a class="link-button" href="https://www.instagram.com/moosfloraldesign/" target="_blank" rel="noopener">
-          <span class="link-icon">📘</span>
-          <span class="link-copy">
-            <strong>Instagram</strong>
-            <span>追蹤最新作品與活動</span>
-          </span>
-        </a>
-
-         <a class="link-button" href="https://www.threads.com/@moosfloraldesign?xmt=AQG04zQzlwpDq6RlvTPWMvOG4OvD1U28wv-HV_kbabQ7Wx0" target="_blank" rel="noopener">
-          <span class="link-icon">📘</span>
-          <span class="link-copy">
-            <strong>Threads</strong>
-            <span>追蹤最新作品與活動</span>
-          </span>
-        </a>
-
-        <a class="link-button" href="https://line.me/R/ti/p/@604vozcf?oat_content=url&ts=12251800" target="_blank" rel="noopener">
-          <span class="link-icon">💬</span>
-          <span class="link-copy">
-            <strong>加入官方 LINE</strong>
-            <span>立即加入官方 LINE</span>
-          </span>
-        </a>
-
-        <a class="link-button" href="https://maps.app.goo.gl/ri2if9PH62GLWELR7?g_st=il" target="_blank" rel="noopener">
-          <span class="link-icon">📍</span>
-          <span class="link-copy">
-            <strong>Google Maps</strong>
-            <span>導航至沐思教室</span>
-          </span>
-        </a>
-
-        <a class="link-button" href="tel:0926714519">
-          <span class="link-icon">📞</span>
-          <span class="link-copy">
-            <strong>聯絡我們</strong>
-            <span>撥打電話號碼</span>
-          </span>
-        </a>
+        <article class="card">
+          <img src="images/about.jpg" alt="聯絡沐思">
+          <div class="overlay">
+            <h2>聯絡沐思</h2>
+            <p>場佈設計、品牌活動、課程與合作洽詢</p>
+            <div class="button-stack">
+              <a class="card-button" href="https://line.me/R/ti/p/@604vozcf?oat_content=url&ts=12251800" target="_blank" rel="noopener">加入官方 LINE</a>
+              <a class="card-button" href="https://maps.app.goo.gl/ri2if9PH62GLWELR7?g_st=il" target="_blank" rel="noopener">Google Maps</a>
+              <a class="card-button" href="tel:0926714519">撥打 0926-714-519</a>
+            </div>
+          </div>
+        </article>
 
       </div>
     </section>
@@ -401,10 +250,6 @@
       </button>
       <div id="status">LINE 連線中…</div>
     </section>
-
-    <footer class="footer">
-      © MOOS Floral Design
-    </footer>
 
   </main>
 
@@ -419,7 +264,7 @@
       giantCourse: "https://www.moos.com.tw/GiantFlowerCourse",
       facebook: "https://www.facebook.com/profile.php?id=100022162093295",
       instagram: "https://www.instagram.com/moosfloraldesign/",
-      threads: "https://www.threads.com/@moosfloraldesign?xmt=AQG04zQzlwpDq6RlvTPWMvOG4OvD1U28wv-HV_kbabQ7Wx0",
+      threads: "https://www.threads.com/@moosfloraldesign",
       officialLine: "https://line.me/R/ti/p/@604vozcf?oat_content=url&ts=12251800",
       maps: "https://maps.app.goo.gl/ri2if9PH62GLWELR7?g_st=il",
       phone: "tel:0926714519"
@@ -428,48 +273,54 @@
     async function initializeLiff() {
       const status = document.getElementById("status");
       const button = document.getElementById("shareButton");
+
       try {
         await liff.init({ liffId: LIFF_ID });
+
         if (!liff.isLoggedIn()) {
           liff.login();
           return;
         }
+
         button.disabled = false;
-        status.textContent = "可以分享給 LINE 好友";
+        status.textContent = "可以分享 6 張卡片給 LINE 好友";
       } catch (error) {
         console.error(error);
         status.textContent = "LINE 連線失敗：" + error.message;
       }
     }
 
-    function makeActionButton(label, uri) {
+    function flexButton(label, uri) {
       return {
         type: "box",
         layout: "vertical",
-        height: "42px",
+        height: "46px",
         justifyContent: "center",
         cornerRadius: "6px",
         borderWidth: "1px",
-        borderColor: "#ffffff66",
-        backgroundColor: "#092529",
-        action: { type: "uri", label, uri },
+        borderColor: "#FFFFFF33",
+        backgroundColor: "#082E31",
+        action: {
+          type: "uri",
+          label: label,
+          uri: uri
+        },
         contents: [
           {
             type: "text",
             text: label,
             color: "#ffffff",
             align: "center",
-            size: "sm",
-            weight: "bold"
+            size: "md"
           }
         ]
       };
     }
 
-    function makeImageCard(imageName, title, description, buttonLabel, buttonUrl) {
+    function singleButtonBubble(imageName, title, description, buttonLabel, buttonUrl) {
       return {
         type: "bubble",
-        size: "mega",
+        size: "giga",
         body: {
           type: "box",
           layout: "vertical",
@@ -480,7 +331,68 @@
               url: IMAGE_BASE + imageName,
               size: "full",
               aspectMode: "cover",
-              aspectRatio: "3:4",
+              aspectRatio: "9:16",
+              gravity: "top"
+            },
+            {
+              type: "box",
+              layout: "vertical",
+              position: "absolute",
+              offsetBottom: "0px",
+              offsetStart: "0px",
+              offsetEnd: "0px",
+              paddingAll: "22px",
+              paddingTop: "78px",
+              background: {
+                type: "linearGradient",
+                angle: "0deg",
+                startColor: "#03303AFF",
+                endColor: "#03303A00"
+              },
+              contents: [
+                {
+                  type: "text",
+                  text: title,
+                  size: "xxl",
+                  color: "#ffffff",
+                  weight: "bold",
+                  wrap: true
+                },
+                {
+                  type: "text",
+                  text: description,
+                  color: "#F0F4F3",
+                  size: "md",
+                  wrap: true,
+                  margin: "sm",
+                  lineSpacing: "5px"
+                },
+                {
+                  ...flexButton(buttonLabel, buttonUrl),
+                  margin: "xl"
+                }
+              ]
+            }
+          ]
+        }
+      };
+    }
+
+    function threeButtonBubble(imageName, title, description, buttons) {
+      return {
+        type: "bubble",
+        size: "giga",
+        body: {
+          type: "box",
+          layout: "vertical",
+          paddingAll: "0px",
+          contents: [
+            {
+              type: "image",
+              url: IMAGE_BASE + imageName,
+              size: "full",
+              aspectMode: "cover",
+              aspectRatio: "9:16",
               gravity: "top"
             },
             {
@@ -491,65 +403,37 @@
               offsetStart: "0px",
               offsetEnd: "0px",
               paddingAll: "20px",
-              paddingTop: "52px",
+              paddingTop: "82px",
               background: {
                 type: "linearGradient",
                 angle: "0deg",
-                startColor: "#03303AFA",
+                startColor: "#03303AFF",
                 endColor: "#03303A00"
               },
               contents: [
-                { type: "text", text: title, size: "xl", color: "#ffffff", weight: "bold", wrap: true },
-                { type: "text", text: description, color: "#ebebeb", size: "sm", wrap: true, margin: "sm", lineSpacing: "5px" },
-                Object.assign(makeActionButton(buttonLabel, buttonUrl), { margin: "xl" })
-              ]
-            }
-          ]
-        }
-      };
-    }
-
-    function makeThreeButtonCard(imageName, title, description, buttons) {
-      return {
-        type: "bubble",
-        size: "mega",
-        body: {
-          type: "box",
-          layout: "vertical",
-          paddingAll: "0px",
-          contents: [
-            {
-              type: "image",
-              url: IMAGE_BASE + imageName,
-              size: "full",
-              aspectMode: "cover",
-              aspectRatio: "3:4",
-              gravity: "top"
-            },
-            {
-              type: "box",
-              layout: "vertical",
-              position: "absolute",
-              offsetBottom: "0px",
-              offsetStart: "0px",
-              offsetEnd: "0px",
-              paddingAll: "18px",
-              paddingTop: "52px",
-              background: {
-                type: "linearGradient",
-                angle: "0deg",
-                startColor: "#03303AFC",
-                endColor: "#03303A00"
-              },
-              contents: [
-                { type: "text", text: title, size: "xl", color: "#ffffff", weight: "bold", wrap: true },
-                { type: "text", text: description, color: "#ebebeb", size: "sm", wrap: true, margin: "sm", lineSpacing: "5px" },
+                {
+                  type: "text",
+                  text: title,
+                  size: "xxl",
+                  color: "#ffffff",
+                  weight: "bold",
+                  wrap: true
+                },
+                {
+                  type: "text",
+                  text: description,
+                  color: "#F0F4F3",
+                  size: "md",
+                  wrap: true,
+                  margin: "sm",
+                  lineSpacing: "5px"
+                },
                 {
                   type: "box",
                   layout: "vertical",
                   spacing: "sm",
                   margin: "lg",
-                  contents: buttons.map(item => makeActionButton(item.label, item.uri))
+                  contents: buttons.map(item => flexButton(item.label, item.uri))
                 }
               ]
             }
@@ -558,24 +442,58 @@
       };
     }
 
-    function buildFlexCarousel() {
+    function buildCarousel() {
       return {
         type: "carousel",
         contents: [
-          makeImageCard("hero.jpg", "沐思植物美學室", "讓品牌因花藝而被記住\n從 2 公分的小花，到 2 公尺的藝術裝置", "認識沐思", URLS.about),
-          makeImageCard("project.jpg", "花藝場佈", "創意花藝 × 巨型裝置\n打造吸睛、有話題的品牌空間", "查看場佈作品", URLS.project),
-          makeImageCard("course.jpg", "德式花藝課程", "從設計邏輯到結構訓練\n建立獨立花藝創作能力", "了解德式花藝課程", URLS.basicCourse),
-          makeImageCard("giant.jpg", "巨型花藝術課程", "從花型設計到結構製作\n打造大型花藝裝置創作能力", "了解巨型花藝術課程", URLS.giantCourse),
-          makeThreeButtonCard("social.jpg", "追蹤沐思", "看更多花藝創作、空間設計與最新課程活動", [
-            { label: "Facebook", uri: URLS.facebook },
-            { label: "Instagram", uri: URLS.instagram },
-            { label: "Threads", uri: URLS.threads }
-          ]),
-          makeThreeButtonCard("about.jpg", "聯絡沐思", "場佈設計、品牌活動、課程與巨型花藝術，歡迎直接聯絡", [
-            { label: "加入官方 LINE", uri: URLS.officialLine },
-            { label: "Google Maps 導航", uri: URLS.maps },
-            { label: "撥打 0926-714-519", uri: URLS.phone }
-          ])
+          singleButtonBubble(
+            "hero.jpg",
+            "關於沐思",
+            "讓品牌因花藝而被記住\n從 2 公分的小花，到 2 公尺的藝術裝置",
+            "認識沐思",
+            URLS.about
+          ),
+          singleButtonBubble(
+            "project.jpg",
+            "花藝場佈",
+            "創意花藝 × 巨型裝置\n打造吸睛、有話題的品牌空間",
+            "更多資訊",
+            URLS.project
+          ),
+          singleButtonBubble(
+            "course.jpg",
+            "德式花藝課程",
+            "從設計邏輯到結構訓練\n建立獨立花藝創作能力",
+            "了解課程",
+            URLS.basicCourse
+          ),
+          singleButtonBubble(
+            "giant.jpg",
+            "巨型花藝術課程",
+            "從花型設計到結構製作\n打造大型花藝裝置創作能力",
+            "了解課程",
+            URLS.giantCourse
+          ),
+          threeButtonBubble(
+            "social.jpg",
+            "Social Media",
+            "追蹤沐思最新作品、空間設計與課程活動",
+            [
+              { label: "Facebook", uri: URLS.facebook },
+              { label: "Instagram", uri: URLS.instagram },
+              { label: "Threads", uri: URLS.threads }
+            ]
+          ),
+          threeButtonBubble(
+            "about.jpg",
+            "聯絡沐思",
+            "場佈設計、品牌活動、課程與合作洽詢",
+            [
+              { label: "加入官方 LINE", uri: URLS.officialLine },
+              { label: "Google Maps", uri: URLS.maps },
+              { label: "撥打 0926-714-519", uri: URLS.phone }
+            ]
+          )
         ]
       };
     }
@@ -583,6 +501,7 @@
     async function shareFlex() {
       const status = document.getElementById("status");
       const button = document.getElementById("shareButton");
+
       button.disabled = true;
       status.textContent = "正在開啟好友名單…";
 
@@ -596,11 +515,13 @@
           [
             {
               type: "flex",
-              altText: "沐思植物美學室｜品牌、場佈、課程與聯絡資訊",
-              contents: buildFlexCarousel()
+              altText: "沐思植物美學室｜6 張品牌、場佈、課程與聯絡卡片",
+              contents: buildCarousel()
             }
           ],
-          { isMultiple: true }
+          {
+            isMultiple: true
+          }
         );
 
         status.textContent = result ? "分享完成" : "已取消分享";
