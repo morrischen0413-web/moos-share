@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+  <meta charset="UTF-8">
   <base target="_top">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moos Share</title>
-
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-
   <style>
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 30px 20px;
@@ -16,68 +16,66 @@
       color: #153f32;
       text-align: center;
     }
-
     .card {
+      width: 100%;
       max-width: 420px;
       margin: 0 auto;
-      background: white;
-      border-radius: 24px;
-      padding: 28px 20px;
-      box-sizing: border-box;
+      padding: 16px;
+      background: #ffffff;
+      border-radius: 22px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
-
-    img {
+    .card img {
       width: 100%;
+      display: block;
       border-radius: 18px;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: top;
     }
-
     h1 {
-      margin: 22px 0 8px;
-      font-size: 28px;
+      margin: 22px 0 10px;
+      font-size: 30px;
+      line-height: 1.25;
     }
-
     p {
+      margin: 0;
+      font-size: 18px;
       line-height: 1.7;
-      color: #555;
+      color: #5f665f;
     }
-
     button {
       width: 100%;
-      margin-top: 20px;
-      padding: 18px;
+      margin-top: 26px;
+      padding: 17px 20px;
       border: 0;
       border-radius: 12px;
-      background: #1f5a46;
-      color: white;
+      background: #1f664f;
+      color: #ffffff;
       font-size: 20px;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
     }
-
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
     #status {
       margin-top: 16px;
+      min-height: 24px;
       font-size: 15px;
+      color: #456458;
     }
   </style>
 </head>
-
 <body>
-  <div class="card">
-    <img src="https://i.ibb.co/mF2tprG8/w1024.jpg" alt="沐思花藝場佈">
-
-    <h1>沐思花藝場佈</h1>
-
-    <p>
-      創意花藝 × 巨型裝置<br>
-      打造吸睛、有話題的品牌空間
-    </p>
-
-    <button id="shareButton" onclick="shareFlex()" disabled>
-      分享給 LINE 好友
-    </button>
-
-    <div id="status">LINE 連線中...</div>
-  </div>
+  <main class="card">
+    <img src="https://i.ibb.co/7xFqDT56/about-Moos.png" alt="沐思花藝設計">
+    <h1>沐思花藝設計</h1>
+    <p>美學 × 創意 × 花藝設計<br>為品牌與空間創造獨特價值</p>
+    <button id="shareButton" onclick="shareFlex()" disabled>分享給 LINE 好友</button>
+    <div id="status">LINE 連線中…</div>
+  </main>
 
   <script>
     const LIFF_ID = "2010673862-CeTg8hAZ";
@@ -87,9 +85,7 @@
       const button = document.getElementById("shareButton");
 
       try {
-        await liff.init({
-          liffId: LIFF_ID
-        });
+        await liff.init({ liffId: LIFF_ID });
 
         if (!liff.isLoggedIn()) {
           liff.login();
@@ -116,77 +112,358 @@
         const result = await liff.shareTargetPicker([
           {
             type: "flex",
-            altText: "沐思花藝場佈作品介紹",
+            altText: "沐思花藝、場佈與課程介紹",
             contents: {
-              type: "carousel",
-              contents: [
+              "type": "carousel",
+              "contents": [
                 {
-                  type: "bubble",
-                  body: {
-                    type: "box",
-                    layout: "vertical",
-                    contents: [
+                  "type": "bubble",
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
                       {
-                        type: "image",
-                        url: "https://i.ibb.co/mF2tprG8/w1024.jpg",
-                        size: "full",
-                        aspectMode: "cover",
-                        aspectRatio: "3:4",
-                        gravity: "top"
+                        "type": "image",
+                        "url": "https://i.ibb.co/7xFqDT56/about-Moos.png",
+                        "size": "full",
+                        "aspectMode": "cover",
+                        "aspectRatio": "3:4",
+                        "gravity": "top"
                       },
                       {
-                        type: "box",
-                        layout: "vertical",
-                        contents: [
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
                           {
-                            type: "text",
-                            text: "花藝場佈",
-                            size: "xl",
-                            color: "#ffffff",
-                            weight: "bold"
+                            "type": "text",
+                            "text": "關於沐思",
+                            "size": "xl",
+                            "color": "#ffffff",
+                            "weight": "bold"
                           },
                           {
-                            type: "text",
-                            text: "創意花藝 × 巨型裝置\n打造吸睛、有話題的品牌空間",
-                            color: "#ebebeb",
-                            size: "sm",
-                            wrap: true,
-                            margin: "sm"
+                            "type": "text",
+                            "text": "美學 × 創意 × 花藝設計\n為品牌與空間創造獨特價值",
+                            "color": "#ebebeb",
+                            "size": "sm",
+                            "wrap": true,
+                            "margin": "sm"
                           },
                           {
-                            type: "box",
-                            layout: "vertical",
-                            contents: [
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
                               {
-                                type: "text",
-                                text: "更多資訊",
-                                color: "#ffffff",
-                                align: "center"
+                                "type": "text",
+                                "text": "認識沐思",
+                                "color": "#ffffff",
+                                "align": "center"
                               }
                             ],
-                            borderWidth: "1px",
-                            cornerRadius: "4px",
-                            borderColor: "#ffffff",
-                            margin: "xxl",
-                            height: "40px",
-                            justifyContent: "center",
-                            action: {
-                              type: "uri",
-                              label: "更多資訊",
-                              uri: "https://www.moos.com.tw/Project"
-                            }
+                            "borderWidth": "1px",
+                            "cornerRadius": "4px",
+                            "margin": "xxl",
+                            "height": "40px",
+                            "justifyContent": "center",
+                            "action": {
+                              "type": "uri",
+                              "label": "認識沐思",
+                              "uri": "https://www.moos.com.tw/AboutMoos"
+                            },
+                            "backgroundColor": "#092529",
+                            "borderColor": "#113239"
                           }
                         ],
-                        position: "absolute",
-                        offsetBottom: "0px",
-                        offsetStart: "0px",
-                        offsetEnd: "0px",
-                        backgroundColor: "#03303Acc",
-                        paddingAll: "20px",
-                        paddingTop: "18px"
+                        "position": "absolute",
+                        "offsetBottom": "0px",
+                        "offsetStart": "0px",
+                        "offsetEnd": "0px",
+                        "backgroundColor": "#03303Acc",
+                        "paddingAll": "20px",
+                        "paddingTop": "18px"
                       }
                     ],
-                    paddingAll: "0px"
+                    "paddingAll": "0px"
+                  }
+                },
+                {
+                  "type": "bubble",
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "image",
+                        "url": "https://i.ibb.co/mF2tprG8/w1024.jpg",
+                        "size": "full",
+                        "aspectMode": "cover",
+                        "aspectRatio": "3:4",
+                        "gravity": "top"
+                      },
+                      {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "花藝場佈",
+                            "size": "xl",
+                            "color": "#ffffff",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "text",
+                            "text": "創意花藝 × 巨型裝置\n打造吸睛、有話題的品牌空間",
+                            "color": "#ebebeb",
+                            "size": "sm",
+                            "wrap": true,
+                            "margin": "sm"
+                          },
+                          {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "text",
+                                "text": "更多資訊",
+                                "color": "#ffffff",
+                                "align": "center"
+                              }
+                            ],
+                            "borderWidth": "1px",
+                            "cornerRadius": "4px",
+                            "borderColor": "#113239",
+                            "margin": "xxl",
+                            "height": "40px",
+                            "justifyContent": "center",
+                            "action": {
+                              "type": "uri",
+                              "label": "更多資訊",
+                              "uri": "https://www.moos.com.tw/Project"
+                            },
+                            "backgroundColor": "#092529"
+                          }
+                        ],
+                        "position": "absolute",
+                        "offsetBottom": "0px",
+                        "offsetStart": "0px",
+                        "offsetEnd": "0px",
+                        "backgroundColor": "#03303Acc",
+                        "paddingAll": "20px",
+                        "paddingTop": "18px"
+                      }
+                    ],
+                    "paddingAll": "0px"
+                  }
+                },
+                {
+                  "type": "bubble",
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "image",
+                        "url": "https://i.ibb.co/vv63LVXj/W1024-2.jpg",
+                        "size": "full",
+                        "aspectMode": "cover",
+                        "aspectRatio": "3:4",
+                        "gravity": "top"
+                      },
+                      {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "德式花藝課程",
+                            "size": "xl",
+                            "color": "#ffffff",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "text",
+                            "text": "從設計邏輯到結構訓練\n建立獨立花藝創作能力",
+                            "color": "#ebebeb",
+                            "size": "sm",
+                            "wrap": true,
+                            "margin": "sm"
+                          },
+                          {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "text",
+                                "text": "了解課程",
+                                "color": "#ffffff",
+                                "align": "center"
+                              }
+                            ],
+                            "borderWidth": "1px",
+                            "cornerRadius": "4px",
+                            "borderColor": "#113239",
+                            "margin": "xxl",
+                            "height": "40px",
+                            "justifyContent": "center",
+                            "action": {
+                              "type": "uri",
+                              "label": "了解課程",
+                              "uri": "https://www.moos.com.tw/BasicCourse"
+                            },
+                            "backgroundColor": "#092529"
+                          }
+                        ],
+                        "position": "absolute",
+                        "offsetBottom": "0px",
+                        "offsetStart": "0px",
+                        "offsetEnd": "0px",
+                        "backgroundColor": "#03303Acc",
+                        "paddingAll": "20px",
+                        "paddingTop": "18px"
+                      }
+                    ],
+                    "paddingAll": "0px"
+                  }
+                },
+                {
+                  "type": "bubble",
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "image",
+                        "url": "https://i.ibb.co/fYbQ3ZJR/Giant-Flower.jpg",
+                        "size": "full",
+                        "aspectMode": "cover",
+                        "aspectRatio": "3:4",
+                        "gravity": "top"
+                      },
+                      {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "巨型花藝術課程",
+                            "size": "xl",
+                            "color": "#ffffff",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "text",
+                            "text": "從花型設計到結構製作\n打造大型花藝裝置創作能力",
+                            "color": "#ebebeb",
+                            "size": "sm",
+                            "wrap": true,
+                            "margin": "sm"
+                          },
+                          {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "text",
+                                "text": "了解課程",
+                                "color": "#ffffff",
+                                "align": "center"
+                              }
+                            ],
+                            "borderWidth": "1px",
+                            "cornerRadius": "4px",
+                            "borderColor": "#113239",
+                            "margin": "xxl",
+                            "height": "40px",
+                            "justifyContent": "center",
+                            "action": {
+                              "type": "uri",
+                              "label": "了解課程",
+                              "uri": "https://www.moos.com.tw/GiantFlowerCourse"
+                            },
+                            "backgroundColor": "#092529"
+                          }
+                        ],
+                        "position": "absolute",
+                        "offsetBottom": "0px",
+                        "offsetStart": "0px",
+                        "offsetEnd": "0px",
+                        "backgroundColor": "#03303Acc",
+                        "paddingAll": "20px",
+                        "paddingTop": "18px"
+                      }
+                    ],
+                    "paddingAll": "0px"
+                  }
+                },
+                {
+                  "type": "bubble",
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "image",
+                        "url": "https://i.ibb.co/PsSkdxmb/social-Media2.jpg",
+                        "size": "full",
+                        "aspectMode": "cover",
+                        "aspectRatio": "3:4",
+                        "gravity": "top"
+                      },
+                      {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "追蹤沐思",
+                            "size": "xl",
+                            "color": "#ffffff",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "text",
+                            "text": "看更多花藝創作與空間設計\n一起探索花藝的更多可能",
+                            "color": "#ebebeb",
+                            "size": "sm",
+                            "wrap": true,
+                            "margin": "sm"
+                          },
+                          {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "text",
+                                "text": "沐思社群媒體",
+                                "color": "#ffffff",
+                                "align": "center"
+                              }
+                            ],
+                            "borderWidth": "1px",
+                            "cornerRadius": "4px",
+                            "borderColor": "#113239",
+                            "margin": "xxl",
+                            "height": "40px",
+                            "justifyContent": "center",
+                            "action": {
+                              "type": "uri",
+                              "label": "沐思社群媒體",
+                              "uri": "https://www.facebook.com/share/1SjigAs8aW/?mibextid=wwXIfr"
+                            },
+                            "backgroundColor": "#092529"
+                          }
+                        ],
+                        "position": "absolute",
+                        "offsetBottom": "0px",
+                        "offsetStart": "0px",
+                        "offsetEnd": "0px",
+                        "backgroundColor": "#03303Acc",
+                        "paddingAll": "20px",
+                        "paddingTop": "18px"
+                      }
+                    ],
+                    "paddingAll": "0px"
                   }
                 }
               ]
