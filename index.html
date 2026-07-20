@@ -184,7 +184,7 @@
           <div class="overlay">
             <h2>關於沐思</h2>
             <p>為品牌與空間創造獨特價值<br>空間布置｜裝置藝術｜花藝教學</p>
-            <a class="card-button" href="https://www.moos.com.tw/AboutMoos" target="_blank" rel="noopener">認識沐思</a>
+            <a class="card-button" href="https://www.moos.com.tw/AboutMoos" onclick="return openExternal(event, this.href)">認識沐思</a>
           </div>
         </article>
 
@@ -193,7 +193,7 @@
           <div class="overlay">
             <h2>花藝場佈</h2>
             <p>創意花藝 × 巨型裝置<br>打造吸睛、有話題的品牌空間</p>
-            <a class="card-button" href="https://www.moos.com.tw/Project" target="_blank" rel="noopener">更多資訊</a>
+            <a class="card-button" href="https://www.moos.com.tw/Project" onclick="return openExternal(event, this.href)">更多資訊</a>
           </div>
         </article>
 
@@ -202,7 +202,7 @@
           <div class="overlay">
             <h2>德式花藝課程</h2>
             <p>從設計邏輯到結構訓練<br>建立獨立花藝創作能力</p>
-            <a class="card-button" href="https://www.moos.com.tw/BasicCourse" target="_blank" rel="noopener">了解課程</a>
+            <a class="card-button" href="https://www.moos.com.tw/BasicCourse" onclick="return openExternal(event, this.href)">了解課程</a>
           </div>
         </article>
 
@@ -211,19 +211,19 @@
           <div class="overlay">
             <h2>巨型花藝術課程</h2>
             <p>從花型設計到結構製作<br>打造大型花藝裝置創作能力</p>
-            <a class="card-button" href="https://www.moos.com.tw/GiantFlowerCourse" target="_blank" rel="noopener">了解課程</a>
+            <a class="card-button" href="https://www.moos.com.tw/GiantFlowerCourse" onclick="return openExternal(event, this.href)">了解課程</a>
           </div>
         </article>
 
         <article class="card">
           <img src="images/social.jpg" alt="Social Media">
           <div class="overlay">
-            <h2>Social Media</h2>
+            <h2>社群媒體</h2>
             <p>追蹤沐思最新作品、空間設計與課程活動</p>
             <div class="button-stack">
-              <a class="card-button" href="https://www.facebook.com/profile.php?id=100022162093295" target="_blank" rel="noopener">Facebook</a>
-              <a class="card-button" href="https://www.instagram.com/moosfloraldesign/" target="_blank" rel="noopener">Instagram</a>
-              <a class="card-button" href="https://www.threads.com/@moosfloraldesign" target="_blank" rel="noopener">Threads</a>
+              <a class="card-button" href="https://www.facebook.com/profile.php?id=100022162093295" onclick="return openExternal(event, this.href)">Facebook</a>
+              <a class="card-button" href="https://www.instagram.com/moosfloraldesign/" onclick="return openExternal(event, this.href)">Instagram</a>
+              <a class="card-button" href="https://www.threads.com/@moosfloraldesign" onclick="return openExternal(event, this.href)">Threads</a>
             </div>
           </div>
         </article>
@@ -234,9 +234,9 @@
             <h2>聯絡沐思</h2>
             <p>場佈設計、品牌活動、課程與合作洽詢</p>
             <div class="button-stack">
-              <a class="card-button" href="https://line.me/R/ti/p/@604vozcf?oat_content=url&ts=12251800" target="_blank" rel="noopener">加入官方 LINE</a>
-              <a class="card-button" href="https://maps.app.goo.gl/ri2if9PH62GLWELR7?g_st=il" target="_blank" rel="noopener">Google Maps</a>
-              <a class="card-button" href="tel:0926714519">撥打 0926-714-519</a>
+              <a class="card-button" href="https://line.me/R/ti/p/@604vozcf?oat_content=url&ts=12251800" onclick="return openExternal(event, this.href)">加入官方 LINE</a>
+              <a class="card-button" href="https://maps.app.goo.gl/ri2if9PH62GLWELR7?g_st=il" onclick="return openExternal(event, this.href)">Google Maps</a>
+              <a class="card-button" href="tel:0926714519" onclick="return openExternal(event, this.href)">撥打電話</a>
             </div>
           </div>
         </article>
@@ -269,6 +269,33 @@
       maps: "https://maps.app.goo.gl/ri2if9PH62GLWELR7?g_st=il",
       phone: "tel:0926714519"
     };
+
+    function openExternal(event, url) {
+      if (event) event.preventDefault();
+
+      try {
+        if (
+          typeof liff !== "undefined" &&
+          typeof liff.isInClient === "function" &&
+          liff.isInClient()
+        ) {
+          liff.openWindow({
+            url: url,
+            external: true
+          });
+        } else {
+          const opened = window.open(url, "_blank", "noopener,noreferrer");
+          if (!opened) {
+            window.location.href = url;
+          }
+        }
+      } catch (error) {
+        console.error("開啟外部連結失敗：", error);
+        window.location.href = url;
+      }
+
+      return false;
+    }
 
     async function initializeLiff() {
       const status = document.getElementById("status");
@@ -491,7 +518,7 @@
             [
               { label: "加入官方 LINE", uri: URLS.officialLine },
               { label: "Google Maps", uri: URLS.maps },
-              { label: "撥打 0926-714-519", uri: URLS.phone }
+              { label: "撥打電話", uri: URLS.phone }
             ]
           )
         ]
