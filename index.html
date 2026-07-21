@@ -180,7 +180,7 @@
       <div class="slider" aria-label="沐思六張介紹卡片">
 
         <article class="card">
-          <img src="images/hero1.jpg" alt="關於沐思">
+          <img src="images/hero1.jpg?v=20260722-1" alt="關於沐思">
           <div class="overlay">
             <h2>關於沐思</h2>
             <p>為品牌與空間創造獨特價值<br>空間布置｜裝置藝術｜花藝教學</p>
@@ -189,7 +189,7 @@
         </article>
 
         <article class="card">
-          <img src="images/project.jpg" alt="花藝場佈">
+          <img src="images/project.jpg?v=20260722-1" alt="花藝場佈">
           <div class="overlay">
             <h2>花藝場佈</h2>
             <p>創意花藝 × 巨型裝置<br>打造吸睛、有話題的品牌空間</p>
@@ -198,7 +198,7 @@
         </article>
 
         <article class="card">
-          <img src="images/course.jpg" alt="德式花藝課程">
+          <img src="images/course.jpg?v=20260722-1" alt="德式花藝課程">
           <div class="overlay">
             <h2>德式花藝課程</h2>
             <p>從設計邏輯到結構訓練<br>建立獨立花藝創作能力</p>
@@ -207,7 +207,7 @@
         </article>
 
         <article class="card">
-          <img src="images/giant.jpg" alt="巨型花藝術課程">
+          <img src="images/giant.jpg?v=20260722-1" alt="巨型花藝術課程">
           <div class="overlay">
             <h2>巨型花藝術課程</h2>
             <p>從花型設計到結構製作<br>打造大型花藝裝置創作能力</p>
@@ -216,7 +216,7 @@
         </article>
 
         <article class="card">
-          <img src="images/social.jpg" alt="Social Media">
+          <img src="images/social.jpg?v=20260722-1" alt="Social Media">
           <div class="overlay">
             <h2>社群媒體</h2>
             <p>追蹤沐思最新作品<br>空間設計與課程活動</p>
@@ -229,7 +229,7 @@
         </article>
 
         <article class="card">
-          <img src="images/about2.jpg" alt="聯絡沐思">
+          <img src="images/about2.jpg?v=20260722-1" alt="聯絡沐思">
           <div class="overlay">
             <h2>聯絡沐思</h2>
             <p>場佈設計、品牌活動<br>課程與合作洽詢</p>
@@ -256,6 +256,7 @@
   <script>
     const LIFF_ID = "2010673862-CeTg8hAZ";
     const IMAGE_BASE = "https://morrischen0413-web.github.io/moos-share/images/";
+    const IMAGE_VERSION = "20260722-1";
 
     const URLS = {
       about: "https://www.moos.com.tw/AboutMoos",
@@ -269,6 +270,25 @@
       maps: "https://maps.app.goo.gl/ri2if9PH62GLWELR7?g_st=il",
       phone: "tel:0926714519"
     };
+
+    function imageUrl(imageName) {
+      return `${IMAGE_BASE}${imageName}?v=${IMAGE_VERSION}`;
+    }
+
+    function lineExternalUrl(url) {
+      if (!/^https?:\/\//i.test(url)) {
+        return url;
+      }
+
+      try {
+        const parsedUrl = new URL(url);
+        parsedUrl.searchParams.set("openExternalBrowser", "1");
+        return parsedUrl.toString();
+      } catch (error) {
+        console.warn("無法加入外部瀏覽器參數：", url, error);
+        return url;
+      }
+    }
 
     function openExternal(event, url) {
       if (event) event.preventDefault();
@@ -330,7 +350,7 @@
         action: {
           type: "uri",
           label: label,
-          uri: uri
+          uri: lineExternalUrl(uri)
         },
         contents: [
           {
@@ -355,7 +375,7 @@
           contents: [
             {
               type: "image",
-              url: IMAGE_BASE + imageName,
+              url: imageUrl(imageName),
               size: "full",
               aspectMode: "cover",
               aspectRatio: "9:16",
@@ -416,7 +436,7 @@
           contents: [
             {
               type: "image",
-              url: IMAGE_BASE + imageName,
+              url: imageUrl(imageName),
               size: "full",
               aspectMode: "cover",
               aspectRatio: "9:16",
